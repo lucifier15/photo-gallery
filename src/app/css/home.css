@@ -1,0 +1,12 @@
+.welcome-wrapper {
+    background-image: url('https://images.pexels.com/photos/633520/pexels-photo-633520.jpeg?cs=srgb&dl=architecture-background-blue-633520.jpg&fm=jpg');
+    height: 55em;
+    background-repeat: no-repeat;
+}
+
+.welcome-text h3{
+    color: #fff !important;
+    margin-top: 0
+}
+
+

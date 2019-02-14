@@ -1,0 +1,19 @@
+.card{
+    box-shadow: 0 4px 8px 0 grey;
+    width: 355px;
+    padding: 5px;
+    margin: 0 14px 14px 0;
+}
+
+.group-name{
+    font: 12pt;
+    font-weight: 600;
+    white-space: nowrap;
+    /* width: 100px; */
+    overflow: hidden;
+    text-overflow: clip; 
+}
+
+.group-info i{
+    color: grey !important;
+}

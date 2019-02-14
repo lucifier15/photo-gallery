@@ -1,0 +1,10 @@
+.navbar{
+    background: #111;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+.navbar a{
+    color: #fff !important;
+}
