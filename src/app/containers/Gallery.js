@@ -1,10 +1,11 @@
 import React from "react";
 import {Link} from "react-router";
-import {Header} from './Header';
+import { Header } from "../components/Header";
 
 import styles from '../css/gallery.css';
+import { connect } from "react-redux";
 
-export class Gallery extends React.Component {
+class Gallery extends React.Component {
     constructor(props){
         super(props);
         this.state = {
@@ -102,3 +103,10 @@ export class Gallery extends React.Component {
         );
     }
 }
+
+
+const mapStateToProps = () => {
+    return{};
+}
+
+export default connect(mapStateToProps)(Gallery);

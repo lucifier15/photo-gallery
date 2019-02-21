@@ -3,9 +3,10 @@ var PieChart = require("react-chartjs").Pie;
 import _ from 'lodash';
 
 import styles from '../css/overview.css';
-import {Header} from './Header';
+import { Header } from "../components/Header";
+import { connect } from "react-redux";
 
-export class Overview extends React.Component {
+class Overview extends React.Component {
 
     constructor(props){
         super(props);
@@ -105,3 +106,9 @@ export class Overview extends React.Component {
         );
     }
 }
+
+const mapStateToProps = () => {
+    return{};
+}
+
+export default connect(mapStateToProps)(Overview);

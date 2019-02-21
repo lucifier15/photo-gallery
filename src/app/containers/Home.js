@@ -1,13 +1,15 @@
 import React from "react";
-import { Header } from "./Header";
-import { Footer } from "./Footer";
+import {connect} from "react-redux";
+import { Header } from "../components/Header";
+// import { Footer } from "./Footer";
 import styles from '../css/home.css';
 
-export class Home extends React.Component {
+class Home extends React.Component {
     render() {
         return (
             <div>
                 <Header />
+                {/* {this.props.group.result} */}
                 <div className="welcome-wrapper">
                     <center>
                         <div className="welcome-text"><h3>Welcome To Photo Gallery</h3></div>
@@ -17,3 +19,11 @@ export class Home extends React.Component {
         );
     }
 }
+
+
+const mapStateToProps = () => {
+    return {
+    }
+}
+
+export default connect(mapStateToProps)(Home);

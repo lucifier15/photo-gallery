@@ -1,11 +1,13 @@
 import React from "react";
 import {Link} from "react-router";
 import styles from '../css/groups.css';
+import { Header } from "../components/Header";
 
-import { Header } from './Header';
+import { searchGroups } from '../actions/groups';
+import { connect } from "react-redux";
 
 
-export class Groups extends React.Component {
+class Groups extends React.Component {
 
     constructor(props) {
         super(props);
@@ -76,3 +78,9 @@ export class Groups extends React.Component {
         );
     }
 }
+
+const mapStateToProps = () => {
+    return{};
+}
+
+export default connect(mapStateToProps)(Groups);
