@@ -5,6 +5,8 @@ import { Header } from "../components/Header";
 import styles from '../css/gallery.css';
 import { connect } from "react-redux";
 
+import { searchPoolPhotos } from '../actions/photos';
+
 class Gallery extends React.Component {
     constructor(props){
         super(props);
@@ -18,7 +20,7 @@ class Gallery extends React.Component {
         this.searchPoolPhotos = this.searchPoolPhotos.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.searchPoolPhotos();
         this.scrollListener = window.addEventListener('scroll', (e) => {
             this.handleScroll(e)
@@ -45,22 +47,15 @@ class Gallery extends React.Component {
         }),this.searchPoolPhotos)
     }
 
-    searchPoolPhotos(){
-        const { per, page, photos } = this.state;
-        const url = `https://api.flickr.com/services/rest/?method=flickr.groups.pools.getPhotos&api_key=daf19e272b75ab9efd60c760ff54b996&
-        group_id=${this.props.params.groupid}&per_page=${per}&page=${page}&format=json&nojsoncallback=1`;
-
-        fetch(url).then(res => res.json()).then((result) => {
+    searchPoolPhotos() {
+        const { per, page, photos } = this.state; 
+        this.props.dispatch(searchPoolPhotos(this.props.params.groupid,per,page)).then(() => {
             this.setState({
-                photos: [...photos, ...result.photos.photo],
+                photos: [...photos, ...this.props.photos],
                 scrolling: false,
-                totalPages: result.pages
+                totalPages: this.props.pages
             })
-        },
-        (error) => {
-                console.log(error)
-            }
-        )
+        });
     }
 
     renderItem(){
@@ -91,6 +86,7 @@ class Gallery extends React.Component {
 
 
     render() {
+        console.log(this.props)
         return (
             <div>
                 <Header />
@@ -105,8 +101,11 @@ class Gallery extends React.Component {
 }
 
 
-const mapStateToProps = () => {
-    return{};
+const mapStateToProps = (state) => {
+    return{
+        photos: state.photos,
+        pages: state.pages
+    };
 }
 
 export default connect(mapStateToProps)(Gallery);

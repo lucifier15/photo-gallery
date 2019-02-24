@@ -6,6 +6,8 @@ import styles from '../css/overview.css';
 import { Header } from "../components/Header";
 import { connect } from "react-redux";
 
+import { searchPoolPhotos, getPhotoComments, getPhotoLikes } from '../actions/photos';
+
 class Overview extends React.Component {
 
     constructor(props){
@@ -20,31 +22,23 @@ class Overview extends React.Component {
         this.getPhotoInfo();
     }
 
+    //get all photos likes/comments based on group id 
     getPhotoInfo() {
-        let url = `https://api.flickr.com/services/rest/?method=flickr.groups.pools.getPhotos&api_key=daf19e272b75ab9efd60c760ff54b996&group_id=${this.props.params.groupid}&format=json&nojsoncallback=1`
-        fetch(url).then(res => res.json()).then((result) => {
-            let photos = result.photos.photo;
-            {photos && photos.map((photo,index)=>{
-                fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=daf19e272b75ab9efd60c760ff54b996&photo_id=${photo.id}&format=json&nojsoncallback=1`)
-               .then(res => res.json()).then((info)=>{
-                    fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.getFavorites&api_key=daf19e272b75ab9efd60c760ff54b996&photo_id=${photo.id}&format=json&nojsoncallback=1`)
-                    .then(res => res.json()).then((favs)=>{
+        this.props.dispatch(searchPoolPhotos(this.props.params.groupid,10,1)).then(() => {
+            this.props.photos && this.props.photos.map((photo) => {
+                this.props.dispatch(getPhotoComments(photo.id)).then((comments)=>{
+                    this.props.dispatch(getPhotoLikes(photo.id)).then((likes) => {
                         this.setState({
                             photosInfo: this.state.photosInfo.concat({
                                 id: photo.id,
-                                comment_count: info.photo.comments._content,
-                                likes: favs.photo.person.length
+                                comment_count: comments,
+                                likes: likes
                             })
                         })
                     })
-                })
-            })}
-           
-        },
-        (error) => {
-                console.log(error)
-            }
-        )
+                });
+            })
+        });
     }
 
     renderPieChart() {
@@ -53,8 +47,6 @@ class Overview extends React.Component {
         //top photos are decided on no of likes/favs
         let topPhotos = _.slice(_.orderBy(photosInfo,'likes','desc'),0,10);
         let restPhotos =  _.differenceWith(photosInfo,topPhotos,_.isEqual);
-        console.log(topPhotos[0]);
-        console.log(restPhotos[0])
         
         var likesChartData = _.map(topPhotos,function(photo){
             return {
@@ -107,8 +99,11 @@ class Overview extends React.Component {
     }
 }
 
-const mapStateToProps = () => {
-    return{};
+const mapStateToProps = (state) => {
+    return{
+        photos: state.photos
+    };
 }
 
+//Connect React Component to Redux Store
 export default connect(mapStateToProps)(Overview);

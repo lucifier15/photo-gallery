@@ -4,6 +4,7 @@ import styles from '../css/groups.css';
 import { Header } from "../components/Header";
 
 import { searchGroups } from '../actions/groups';
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 
@@ -11,40 +12,20 @@ class Groups extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            groups: null
-        };
-        this.searchGroups = this.searchGroups.bind(this);
     }
 
     componentDidMount(){
-        this.searchGroups();
-    }
-
-    searchGroups() {
-        let text = this.props.params.text;
-        let url = `https://api.flickr.com/services/rest/?method=flickr.groups.search&api_key=daf19e272b75ab9efd60c760ff54b996&text=${text}&format=json&nojsoncallback=1`;
-        fetch(url).then(res => res.json()).then((result) => {
-            this.setState({
-                groups: result.groups.group
-            })
-        },
-        (error) => {
-                console.log(error)
-            }
-        )
+        this.props.dispatch(searchGroups(this.props.params.text));
     }
 
     renderGroupCard(){
-        let { groups } = this.state;
-        console.log(groups);
-        return (groups) ? (
+        let { groups } = this.props;
+        return (groups.length>0) ? (
             <div>
                     <div>
                         <span>Groups</span>
                     </div><br />
                     {groups && groups.map((group,index)=>{
-                        console.log(group)
                     let thumb_src = `http://farm${group.iconfarm}.staticflickr.com/${group.iconserver}/buddyicons/${group.nsid}.jpg`;
                     return (
                         <Link to={`/gallery/${group.nsid}`}  key={index}>
@@ -79,8 +60,12 @@ class Groups extends React.Component {
     }
 }
 
-const mapStateToProps = () => {
-    return{};
+const mapStateToProps = (state) => {
+    return {
+        groups: state.groups,
+    }
 }
 
+
+//Connects React Component to Redux Store
 export default connect(mapStateToProps)(Groups);

@@ -1,5 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import groupReducer from './reducers/group';
-// import photo from './reducers/photo';
+import logger from "redux-logger";
+import thunk from "redux-thunk";
+import mainReducer from './reducers/mainReducer';
 
-export default createStore(combineReducers({groupReducer}),{});
+
+export default createStore(mainReducer,applyMiddleware(thunk));
