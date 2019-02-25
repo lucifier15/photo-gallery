@@ -8,3 +8,10 @@
 .navbar a{
     color: #fff !important;
 }
+
+.suggestion-list{
+    background: #fff;
+    height: 100px;
+    overflow-y: scroll;
+    z-index: 1000;
+}

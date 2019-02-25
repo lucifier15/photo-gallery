@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 //action to get all photos for a group via group id
+//axios is used to make api calls
 export const searchPoolPhotos = (groupId,per_page,page) => {
     return dispatch => {
         return axios.post(`https://api.flickr.com/services/rest/?method=flickr.groups.pools.getPhotos&api_key=daf19e272b75ab9efd60c760ff54b996&
@@ -17,6 +18,7 @@ export const searchPoolPhotos = (groupId,per_page,page) => {
 }
 
 //function to get likes for a photo
+//axios is used to make api calls
 export const getPhotoLikes = (photoId) => {
     return dispatch => {
         return axios.post(`https://api.flickr.com/services/rest/?method=flickr.photos.getFavorites&api_key=daf19e272b75ab9efd60c760ff54b996&photo_id=${photoId}&format=json&nojsoncallback=1`)
@@ -27,6 +29,7 @@ export const getPhotoLikes = (photoId) => {
 }
 
 //function to get comments for a photo
+//axios is used to make api calls
 export const getPhotoComments = (photoId) => {
     return dispatch => {
         return axios.post(`https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=daf19e272b75ab9efd60c760ff54b996&photo_id=${photoId}&format=json&nojsoncallback=1`)

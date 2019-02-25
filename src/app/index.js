@@ -15,10 +15,10 @@ import Overview from "./containers/Overview";
 render(
     <Provider store={store}>
        <Router history={browserHistory}>
-                <Route path="/" component={Home} />
-                <Route path="/groups/:text" component={Groups} />
-                <Route path="/gallery/:groupid" component={Gallery} />
-                <Route path="/overview/:groupid" component={Overview} />
+            <Route path="/" component={Home} />
+            <Route path="/groups/:text" component={Groups} />
+            <Route path="/gallery/:groupid" component={Gallery} />
+            <Route path="/overview/:groupid" component={Overview} />
         </Router>
     </Provider>,
  window.document.getElementById('app'));

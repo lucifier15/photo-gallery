@@ -60,6 +60,7 @@ class Groups extends React.Component {
     }
 }
 
+//function to map global state to component
 const mapStateToProps = (state) => {
     return {
         groups: state.groups,

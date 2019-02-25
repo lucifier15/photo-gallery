@@ -21,6 +21,7 @@ class Home extends React.Component {
 }
 
 
+//function to map global state to component
 const mapStateToProps = () => {
     return {
     }

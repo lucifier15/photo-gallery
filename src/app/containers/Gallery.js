@@ -101,6 +101,7 @@ class Gallery extends React.Component {
 }
 
 
+//function to map global state to component
 const mapStateToProps = (state) => {
     return{
         photos: state.photos,
@@ -108,4 +109,5 @@ const mapStateToProps = (state) => {
     };
 }
 
+//connects React Component to Redux Store
 export default connect(mapStateToProps)(Gallery);
